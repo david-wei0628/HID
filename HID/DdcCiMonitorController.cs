@@ -43,12 +43,19 @@ public class DdcCiMonitorController
     [DllImport("dxva2.dll", SetLastError = true)]
     private static extern bool DestroyPhysicalMonitors(uint dwPhysicalMonitorArraySize, PHYSICAL_MONITOR[] pPhysicalMonitorArray);
 
-    // 高階 API
+    // 高階 API 亮度
     [DllImport("dxva2.dll", SetLastError = true)]
     private static extern bool SetMonitorBrightness(IntPtr hMonitor, uint dwNewBrightness);
 
     [DllImport("dxva2.dll", SetLastError = true)]
     private static extern bool GetMonitorBrightness(IntPtr hMonitor, out uint pdwMinimumBrightness, out uint pdwCurrentBrightness, out uint pdwMaximumBrightness);
+
+    // 高階 API 對比
+    [DllImport("dxva2.dll", SetLastError = true)]
+    private static extern bool SetMonitorContrast(IntPtr hMonitor, uint dwNewBrightness);
+
+    [DllImport("dxva2.dll", SetLastError = true)]
+    private static extern bool GetMonitorContrast(IntPtr hMonitor, out uint pdwMinimumBrightness, out uint pdwCurrentBrightness, out uint pdwMaximumBrightness);
 
     // 低階 API (控制輸入源、色彩模式等)
     [DllImport("dxva2.dll", SetLastError = true)]
@@ -161,7 +168,7 @@ public class DdcCiMonitorController
         {
             // 查詢 Windows 的 WmiMonitorID 類別
             using (var searcher = new ManagementObjectSearcher(@"Root\W_M_I", "SELECT * FROM WmiMonitorID"))
-            {
+            {                
                 foreach (ManagementObject mo in searcher.Get())
                 {
                     // UserFriendlyName 儲存的是 EDID 裡面的實體型號代碼（為不連續的通訊陣列）
@@ -193,6 +200,24 @@ public class DdcCiMonitorController
     }
 
     /// <summary>
+    /// 非同步獲取特定螢幕的當前亮度
+    /// </summary>
+    /// <returns>回傳當前亮度 (0~100)，若失敗則回傳 -1</returns>
+    public static Task<int> GetBrightnessAsync(IntPtr hPhysicalMonitor)
+    {
+        return Task.Run(() =>
+        {
+            uint min, current, max;
+            // 呼叫 Win32 API 讀取硬體數值
+            if (GetMonitorBrightness(hPhysicalMonitor, out min, out current, out max))
+            {
+                return (int)current; // 成功則回傳目前亮度
+            }
+            return -1; // 失敗（例如螢幕不支援、HDR開啟或線材阻斷）
+        });
+    }
+
+    /// <summary>
     /// 非同步調整特定螢幕的亮度
     /// </summary>
     public static Task<bool> SetBrightnessAsync(IntPtr hPhysicalMonitor, uint brightness)
@@ -202,6 +227,37 @@ public class DdcCiMonitorController
             if (brightness > 100) brightness = 100;
             // DDC/CI 硬體通訊需要時間，丟到背景執行緒處理
             return SetMonitorBrightness(hPhysicalMonitor, brightness);
+        });
+    }
+
+     /// <summary>
+    /// 非同步獲取特定螢幕的當前對比
+    /// </summary>
+    /// <returns>回傳當前對比 (0~100)，若失敗則回傳 -1</returns>
+    public static Task<int> GetContrastAsync(IntPtr hPhysicalMonitor)
+    {
+        return Task.Run(() =>
+        {
+            uint min, current, max;
+            // 呼叫 Win32 API 讀取硬體數值
+            if (GetMonitorContrast(hPhysicalMonitor, out min, out current, out max))
+            {
+                return (int)current; // 成功則回傳目前對比
+            }
+            return -1; // 失敗（例如螢幕不支援、HDR開啟或線材阻斷）
+        });
+    }
+
+    /// <summary>
+    /// 非同步調整特定螢幕的對比
+    /// </summary>
+    public static Task<bool> SetContrastAsync(IntPtr hPhysicalMonitor, uint contrast)
+    {
+        return Task.Run(() =>
+        {
+            if (contrast > 100) contrast = 100;
+            // DDC/CI 硬體通訊需要時間，丟到背景執行緒處理
+            return SetMonitorContrast(hPhysicalMonitor, contrast);
         });
     }
 
