@@ -30,12 +30,13 @@
         {
             this.cmbMonitors = new System.Windows.Forms.ComboBox();
             this.lblStatus = new System.Windows.Forms.Label();
-            this.trackBrightness = new System.Windows.Forms.TrackBar();
             this.labBrightnessValue = new System.Windows.Forms.Label();
-            this.BrightnessGroup = new System.Windows.Forms.GroupBox();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.ContrastGroup = new System.Windows.Forms.GroupBox();
             this.labContrastValue = new System.Windows.Forms.Label();
+            this.BrightnessGroup = new System.Windows.Forms.GroupBox();
+            this.BrightnesshScrollBar = new System.Windows.Forms.HScrollBar();
+            this.trackBrightness = new System.Windows.Forms.TrackBar();
+            this.ContrasthScrollBar = new System.Windows.Forms.HScrollBar();
+            this.ContrastGroup = new System.Windows.Forms.GroupBox();
             this.trackContrast = new System.Windows.Forms.TrackBar();
             this.SetValueGroup = new System.Windows.Forms.GroupBox();
             this.Contrast_SetValue_lab = new System.Windows.Forms.Label();
@@ -43,10 +44,9 @@
             this.Contrast_SetValue_txtBox = new System.Windows.Forms.TextBox();
             this.Brightness_SetValue_txtBox = new System.Windows.Forms.TextBox();
             this.NigthModeBTN = new System.Windows.Forms.Button();
-            this.BrightnesshScrollBar = new System.Windows.Forms.HScrollBar();
-            this.ContrasthScrollBar = new System.Windows.Forms.HScrollBar();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBrightness)).BeginInit();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.BrightnessGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBrightness)).BeginInit();
             this.ContrastGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackContrast)).BeginInit();
             this.SetValueGroup.SuspendLayout();
@@ -73,14 +73,6 @@
             this.lblStatus.TabIndex = 1;
             this.lblStatus.Text = "label1";
             // 
-            // trackBrightness
-            // 
-            this.trackBrightness.Location = new System.Drawing.Point(7, 51);
-            this.trackBrightness.Name = "trackBrightness";
-            this.trackBrightness.Size = new System.Drawing.Size(422, 45);
-            this.trackBrightness.TabIndex = 3;
-            this.trackBrightness.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBrightness_MouseUp);
-            // 
             // labBrightnessValue
             // 
             this.labBrightnessValue.AutoSize = true;
@@ -89,7 +81,19 @@
             this.labBrightnessValue.Name = "labBrightnessValue";
             this.labBrightnessValue.Size = new System.Drawing.Size(124, 30);
             this.labBrightnessValue.TabIndex = 5;
+            this.labBrightnessValue.Tag = "Brightness";
             this.labBrightnessValue.Text = "Brightness";
+            // 
+            // labContrastValue
+            // 
+            this.labContrastValue.AutoSize = true;
+            this.labContrastValue.Font = new System.Drawing.Font("Noto Serif JP Medium", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labContrastValue.Location = new System.Drawing.Point(7, 18);
+            this.labContrastValue.Name = "labContrastValue";
+            this.labContrastValue.Size = new System.Drawing.Size(103, 30);
+            this.labContrastValue.TabIndex = 5;
+            this.labContrastValue.Tag = "Contrast";
+            this.labContrastValue.Text = "Contrast";
             // 
             // BrightnessGroup
             // 
@@ -102,7 +106,40 @@
             this.BrightnessGroup.Size = new System.Drawing.Size(511, 132);
             this.BrightnessGroup.TabIndex = 6;
             this.BrightnessGroup.TabStop = false;
+            this.BrightnessGroup.Tag = "Brightness";
             this.BrightnessGroup.Text = "亮度";
+            // 
+            // BrightnesshScrollBar
+            // 
+            this.BrightnesshScrollBar.Cursor = System.Windows.Forms.Cursors.NoMoveHoriz;
+            this.BrightnesshScrollBar.LargeChange = 5;
+            this.BrightnesshScrollBar.Location = new System.Drawing.Point(3, 103);
+            this.BrightnesshScrollBar.Name = "BrightnesshScrollBar";
+            this.BrightnesshScrollBar.Size = new System.Drawing.Size(426, 26);
+            this.BrightnesshScrollBar.TabIndex = 6;
+            this.BrightnesshScrollBar.Tag = "Brightness";
+            this.BrightnesshScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.BrightnesshScrollBar_Scroll);
+            // 
+            // trackBrightness
+            // 
+            this.trackBrightness.Cursor = System.Windows.Forms.Cursors.VSplit;
+            this.trackBrightness.Location = new System.Drawing.Point(7, 51);
+            this.trackBrightness.Name = "trackBrightness";
+            this.trackBrightness.Size = new System.Drawing.Size(422, 45);
+            this.trackBrightness.TabIndex = 3;
+            this.trackBrightness.Tag = "Brightness";
+            this.trackBrightness.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBrightness_MouseUp);
+            // 
+            // ContrasthScrollBar
+            // 
+            this.ContrasthScrollBar.Cursor = System.Windows.Forms.Cursors.NoMoveHoriz;
+            this.ContrasthScrollBar.LargeChange = 5;
+            this.ContrasthScrollBar.Location = new System.Drawing.Point(3, 103);
+            this.ContrasthScrollBar.Name = "ContrasthScrollBar";
+            this.ContrasthScrollBar.Size = new System.Drawing.Size(426, 26);
+            this.ContrasthScrollBar.TabIndex = 7;
+            this.ContrasthScrollBar.Tag = "Contrast";
+            this.ContrasthScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.ContrasthScrollBar_Scroll);
             // 
             // ContrastGroup
             // 
@@ -115,24 +152,17 @@
             this.ContrastGroup.Size = new System.Drawing.Size(511, 132);
             this.ContrastGroup.TabIndex = 7;
             this.ContrastGroup.TabStop = false;
+            this.ContrastGroup.Tag = "Contrast";
             this.ContrastGroup.Text = "對比";
             // 
-            // labContrastValue
+            // trackContrast
             // 
-            this.labContrastValue.AutoSize = true;
-            this.labContrastValue.Font = new System.Drawing.Font("Noto Serif JP Medium", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labContrastValue.Location = new System.Drawing.Point(7, 18);
-            this.labContrastValue.Name = "labContrastValue";
-            this.labContrastValue.Size = new System.Drawing.Size(103, 30);
-            this.labContrastValue.TabIndex = 5;
-            this.labContrastValue.Text = "Contrast";
-            // 
-            // trackBarContrast
-            // 
+            this.trackContrast.Cursor = System.Windows.Forms.Cursors.VSplit;
             this.trackContrast.Location = new System.Drawing.Point(7, 51);
-            this.trackContrast.Name = "trackBarContrast";
+            this.trackContrast.Name = "trackContrast";
             this.trackContrast.Size = new System.Drawing.Size(422, 45);
             this.trackContrast.TabIndex = 3;
+            this.trackContrast.Tag = "Contrast";
             this.trackContrast.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBarContrast_MouseUp);
             // 
             // SetValueGroup
@@ -174,7 +204,7 @@
             // 
             this.Contrast_SetValue_txtBox.Font = new System.Drawing.Font("Noto Serif JP Medium", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.Contrast_SetValue_txtBox.Location = new System.Drawing.Point(44, 168);
-            this.Contrast_SetValue_txtBox.Name = "ContrastValue_SetValue_txtBox";
+            this.Contrast_SetValue_txtBox.Name = "Contrast_SetValue_txtBox";
             this.Contrast_SetValue_txtBox.Size = new System.Drawing.Size(141, 38);
             this.Contrast_SetValue_txtBox.TabIndex = 2;
             // 
@@ -196,27 +226,11 @@
             this.NigthModeBTN.UseVisualStyleBackColor = true;
             this.NigthModeBTN.Click += new System.EventHandler(this.button1_Click);
             // 
-            // BrightnesshScrollBar
-            // 
-            this.BrightnesshScrollBar.LargeChange = 5;
-            this.BrightnesshScrollBar.Location = new System.Drawing.Point(3, 103);
-            this.BrightnesshScrollBar.Name = "BrightnesshScrollBar";
-            this.BrightnesshScrollBar.Size = new System.Drawing.Size(426, 26);
-            this.BrightnesshScrollBar.TabIndex = 6;
-            // 
-            // ContrasthScrollBar
-            // 
-            this.ContrasthScrollBar.LargeChange = 5;
-            this.ContrasthScrollBar.Location = new System.Drawing.Point(3, 103);
-            this.ContrasthScrollBar.Name = "ContrasthScrollBar";
-            this.ContrasthScrollBar.Size = new System.Drawing.Size(426, 26);
-            this.ContrasthScrollBar.TabIndex = 7;
-            // 
             // HID_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 459);
             this.Controls.Add(this.SetValueGroup);
             this.Controls.Add(this.ContrastGroup);
             this.Controls.Add(this.BrightnessGroup);
@@ -226,9 +240,9 @@
             this.Text = "HID";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HID__Form_FormClosing);
             this.Load += new System.EventHandler(this.HID_Form_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.trackBrightness)).EndInit();
             this.BrightnessGroup.ResumeLayout(false);
             this.BrightnessGroup.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBrightness)).EndInit();
             this.ContrastGroup.ResumeLayout(false);
             this.ContrastGroup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackContrast)).EndInit();

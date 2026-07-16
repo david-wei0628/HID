@@ -110,7 +110,7 @@ namespace HID
                 /*trackBrightness.Value = currentBrightness;
                 BrightnesshScrollBar.Value = currentBrightness;*/
                 BrightnessValueRevise((uint)currentBrightness);
-                labBrightnessValue.Text = $"目前亮度: {currentBrightness}%";
+                labBrightnessValue.Text = $"{currentBrightness}%";
             }
             else
             {
@@ -130,7 +130,7 @@ namespace HID
                 /*trackContrast.Value = currentContrast;      // 您畫底層給對比用的 TrackBar
                 ContrasthScrollBar.Value= currentContrast;*/
                 ContrasthValueRevise((uint)currentContrast);
-                labContrastValue.Text = $"目前對比: {currentContrast}%"; // 您畫給對比用的 Label
+                labContrastValue.Text = $"{currentContrast}%"; // 您畫給對比用的 Label
             }
             else
             {
@@ -150,7 +150,7 @@ namespace HID
 
                 if (success)
                 {     //lblStatus.Text = $"亮度已成功設定為 {targetBrightness}%";
-                    labBrightnessValue.Text = $"目前亮度: {targetBrightness}%";
+                    labBrightnessValue.Text = $"{targetBrightness}%";
                     BrightnessValueRevise(targetBrightness);
                 }
                 else
@@ -170,7 +170,7 @@ namespace HID
 
                 if (success)
                 {
-                    labContrastValue.Text = $"目前對比: {targetContrast}%";
+                    labContrastValue.Text = $"{targetContrast}%";
                     ContrasthValueRevise(targetContrast);
                 }
                 else
@@ -183,18 +183,18 @@ namespace HID
             BTNchange(30, 20);
         }
 
-        private async void BTNchange(uint BrightnessValue,uint ContrastValue)
+        private async void BTNchange(uint BrightnessValue, uint ContrastValue)
         {
             if (cmbMonitors.SelectedItem is DdcCiMonitorController.MonitorInfo selectedMonitor)
             {
-                
+
                 if (await DdcCiMonitorController.SetContrastAsync(selectedMonitor.Handle, ContrastValue))
-                    labContrastValue.Text = $"目前對比: {ContrastValue}%";
+                    labContrastValue.Text = $"{ContrastValue}%";
                 else
                     lblStatus.Text = "對比設定失敗 (螢幕可能正處於 HDR 模式或 OSD 鎖定狀態)";
 
                 if (await DdcCiMonitorController.SetBrightnessAsync(selectedMonitor.Handle, BrightnessValue))
-                    labBrightnessValue.Text = $"目前亮度: {BrightnessValue}%";
+                    labBrightnessValue.Text = $"{BrightnessValue}%";
                 else
                     lblStatus.Text = "對比設定失敗 (螢幕可能正處於 HDR 模式或 OSD 鎖定狀態)";
 
@@ -214,6 +214,84 @@ namespace HID
         {
             trackContrast.Value = (int)Value;
             ContrasthScrollBar.Value = (int)Value;
+        }
+
+        private void BrightnesshScrollBar_Scroll(object sender, ScrollEventArgs e)
+        {
+            labBrightnessValue.Text = $"{e.NewValue}%";
+
+            ScrollEvenALL(sender, e);
+
+            BrightnessValueRevise((uint)e.NewValue);
+        }
+
+        private void ContrasthScrollBar_Scroll(object sender, ScrollEventArgs e)
+        {
+            labContrastValue.Text = $"{e.NewValue}%";
+
+            ScrollEvenALL(sender, e);
+
+            ContrasthValueRevise((uint)e.NewValue);
+        }
+
+        private void ScrollEvenALL(object Sender, ScrollEventArgs e)
+        {
+
+            switch (e.Type)
+            {
+                case ScrollEventType.ThumbTrack:
+                    break;
+                case ScrollEventType.EndScroll:
+                    if (Sender is Control control)
+                    {
+                        objEven(control);
+                    }
+                    break;
+            }
+        }
+
+        private void objEven(Control control)
+        {
+            if (control is HScrollBar hScroll)
+            {
+                switch (hScroll.Name)
+                {
+                    case "BrightnesshScrollBar":
+                        OSDBrightnessValueRevise((uint)hScroll.Value);
+                        //Console.WriteLine(hScroll.Value);
+                        break;
+                    case "ContrasthScrollBar":
+                        OSDContrastValueRevise((uint)hScroll.Value);
+                        //Console.WriteLine(hScroll.Value);
+                        break;
+                }
+            }
+        }
+        
+        private async void OSDBrightnessValueRevise(uint OSDNewValue)
+        {
+            if (cmbMonitors.SelectedItem is DdcCiMonitorController.MonitorInfo selectedMonitor)
+            {
+
+                if (await DdcCiMonitorController.SetBrightnessAsync(selectedMonitor.Handle, OSDNewValue))
+                    labBrightnessValue.Text = $"{OSDNewValue}%";
+                else
+                    lblStatus.Text = "設定失敗 (螢幕可能正處於 HDR 模式或 OSD 鎖定狀態)";
+
+            }
+        }
+
+        private async void OSDContrastValueRevise(uint OSDNewValue)
+        {
+            if (cmbMonitors.SelectedItem is DdcCiMonitorController.MonitorInfo selectedMonitor)
+            {
+
+                if (await DdcCiMonitorController.SetContrastAsync(selectedMonitor.Handle, OSDNewValue))
+                    labContrastValue.Text = $"{OSDNewValue}%";
+                else
+                    lblStatus.Text = "設定失敗 (螢幕可能正處於 HDR 模式或 OSD 鎖定狀態)";
+
+            }
         }
     }
 }
