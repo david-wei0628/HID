@@ -128,7 +128,7 @@
             this.trackBrightness.Size = new System.Drawing.Size(422, 45);
             this.trackBrightness.TabIndex = 3;
             this.trackBrightness.Tag = "Brightness";
-            this.trackBrightness.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBrightness_MouseUp);
+            this.trackBrightness.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBarBrightness_MouseUp);
             // 
             // ContrasthScrollBar
             // 
