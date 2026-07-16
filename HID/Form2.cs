@@ -245,6 +245,7 @@ namespace HID
                     if (Sender is Control control)
                     {
                         objEven(control);
+
                     }
                     break;
             }
@@ -252,7 +253,22 @@ namespace HID
 
         private void objEven(Control control)
         {
-            if (control is HScrollBar hScroll)
+            switch (control.Tag)
+            {
+                case "Brightness":
+                    if (control is HScrollBar hScrolBrightness)
+                    {
+                        OSDBrightnessValueRevise((uint)hScrolBrightness.Value);
+                    }
+                    break;
+                case "Contrast":
+                    if (control is HScrollBar hScrolContrast)
+                    {
+                        OSDContrastValueRevise((uint)hScrolContrast.Value);
+                    }
+                    break;
+            }
+            /*if (control is HScrollBar hScroll)
             {
                 switch (hScroll.Name)
                 {
@@ -265,9 +281,9 @@ namespace HID
                         //Console.WriteLine(hScroll.Value);
                         break;
                 }
-            }
+            }*/
         }
-        
+
         private async void OSDBrightnessValueRevise(uint OSDNewValue)
         {
             if (cmbMonitors.SelectedItem is DdcCiMonitorController.MonitorInfo selectedMonitor)
