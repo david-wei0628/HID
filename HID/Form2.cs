@@ -146,25 +146,8 @@ namespace HID
                 lblStatus.Text = $"正在變更亮度至 {targetBrightness}%...";
 
                 OSDBrightnessValueRevise(targetBrightness);
-
-                /*bool success = await DdcCiMonitorController.SetBrightnessAsync(selectedMonitor.Handle, targetBrightness);
-
-                if (success)
-                {     //lblStatus.Text = $"亮度已成功設定為 {targetBrightness}%";
-                    BrightnessValueRevise(targetBrightness);
-                }
-                else
-                    lblStatus.Text = "亮度設定失敗 (螢幕可能正處於 HDR 模式或 OSD 鎖定狀態)";*/
             }
         }
-        /*private void trackBrightness_Scroll(object sender, EventArgs e)
-        {
-            labBrightnessValue.Text = $"{e.v}%";
-
-            ScrollEvenALL(sender, e);
-
-            BrightnessValueRevise((uint)e.NewValue);
-        }*/
 
         private void trackBarContrast_MouseUp(object sender, MouseEventArgs e)
         {
@@ -174,15 +157,6 @@ namespace HID
                 lblStatus.Text = $"正在變更對比至 {targetContrast}%...";
 
                 OSDContrastValueRevise(targetContrast);
-
-                /*bool success = await DdcCiMonitorController.SetContrastAsync(selectedMonitor.Handle, targetContrast);
-
-                if (success)
-                {                    
-                    ContrasthValueRevise(targetContrast);
-                }
-                else
-                    lblStatus.Text = "對比設定失敗 (螢幕可能正處於 HDR 模式或 OSD 鎖定狀態)";*/
             }
         }
         /*private void trackContrast_Scroll(object sender, EventArgs e)
@@ -198,6 +172,7 @@ namespace HID
         {           
             OSDBrightnessValueRevise(BrightnessValue);
             OSDContrastValueRevise(ContrastValue);
+            lblStatus.Text = $"亮度/對比改為夜晚";
         }
 
         private void BrightnessValueRevise(int Value)
@@ -285,6 +260,22 @@ namespace HID
                     lblStatus.Text = "設定失敗 (螢幕可能正處於 HDR 模式或 OSD 鎖定狀態)";
 
                 ContrasthValueRevise(OSDNewValue);
+            }
+        }
+
+        private void trackBar_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (sender is Control control)
+            {
+                switch (control.Tag)
+                {
+                    case "Brightness":
+                        labBrightnessValue.Text = $"{trackBrightness.Value}%";
+                        break;
+                    case "Contrast":
+                        labContrastValue.Text = $"{trackContrast.Value}%";
+                        break;
+                }
             }
         }
     }

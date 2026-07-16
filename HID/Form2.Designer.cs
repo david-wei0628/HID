@@ -128,6 +128,7 @@
             this.trackBrightness.Size = new System.Drawing.Size(422, 45);
             this.trackBrightness.TabIndex = 3;
             this.trackBrightness.Tag = "Brightness";
+            this.trackBrightness.MouseMove += new System.Windows.Forms.MouseEventHandler(this.trackBar_MouseMove);
             this.trackBrightness.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBarBrightness_MouseUp);
             // 
             // ContrasthScrollBar
@@ -163,6 +164,7 @@
             this.trackContrast.Size = new System.Drawing.Size(422, 45);
             this.trackContrast.TabIndex = 3;
             this.trackContrast.Tag = "Contrast";
+            this.trackContrast.MouseMove += new System.Windows.Forms.MouseEventHandler(this.trackBar_MouseMove);
             this.trackContrast.MouseUp += new System.Windows.Forms.MouseEventHandler(this.trackBarContrast_MouseUp);
             // 
             // SetValueGroup
