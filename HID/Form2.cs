@@ -163,16 +163,16 @@ namespace HID
         {
         }*/
 
-        private void button1_Click(object sender, EventArgs e)
+        private void NigthModeBTN_Click(object sender, EventArgs e)
         {
             BTNchange(30, 20);
+            lblStatus.Text = $"亮度/對比改為夜晚";
         }
 
         private void BTNchange(int BrightnessValue, int ContrastValue)
-        {           
+        {
             OSDBrightnessValueRevise(BrightnessValue);
             OSDContrastValueRevise(ContrastValue);
-            lblStatus.Text = $"亮度/對比改為夜晚";
         }
 
         private void BrightnessValueRevise(int Value)
@@ -277,6 +277,17 @@ namespace HID
                         break;
                 }
             }
+        }
+
+        private void SetValueBTN_Click(object sender, EventArgs e)
+        {
+            int BrightnessValue;
+            int ContrastValue;
+            int.TryParse(Brightness_SetValue_txtBox.Text, out BrightnessValue);            
+            int.TryParse(Contrast_SetValue_txtBox.Text, out ContrastValue);
+            BTNchange(BrightnessValue, ContrastValue);
+            Brightness_SetValue_txtBox.Text = null;
+            Contrast_SetValue_txtBox.Text = null;
         }
     }
 }

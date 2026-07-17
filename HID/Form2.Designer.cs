@@ -39,17 +39,20 @@
             this.ContrastGroup = new System.Windows.Forms.GroupBox();
             this.trackContrast = new System.Windows.Forms.TrackBar();
             this.SetValueGroup = new System.Windows.Forms.GroupBox();
+            this.SetValueBTN = new System.Windows.Forms.Button();
             this.Contrast_SetValue_lab = new System.Windows.Forms.Label();
             this.Brightness_SetValue_lab = new System.Windows.Forms.Label();
-            this.Contrast_SetValue_txtBox = new System.Windows.Forms.TextBox();
             this.Brightness_SetValue_txtBox = new System.Windows.Forms.TextBox();
+            this.Contrast_SetValue_txtBox = new System.Windows.Forms.TextBox();
             this.NigthModeBTN = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.Modegroup = new System.Windows.Forms.GroupBox();
             this.BrightnessGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBrightness)).BeginInit();
             this.ContrastGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackContrast)).BeginInit();
             this.SetValueGroup.SuspendLayout();
+            this.Modegroup.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmbMonitors
@@ -169,70 +172,92 @@
             // 
             // SetValueGroup
             // 
+            this.SetValueGroup.Controls.Add(this.SetValueBTN);
             this.SetValueGroup.Controls.Add(this.Contrast_SetValue_lab);
             this.SetValueGroup.Controls.Add(this.Brightness_SetValue_lab);
-            this.SetValueGroup.Controls.Add(this.Contrast_SetValue_txtBox);
             this.SetValueGroup.Controls.Add(this.Brightness_SetValue_txtBox);
-            this.SetValueGroup.Controls.Add(this.NigthModeBTN);
+            this.SetValueGroup.Controls.Add(this.Contrast_SetValue_txtBox);
             this.SetValueGroup.Font = new System.Drawing.Font("Noto Serif JP Medium", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.SetValueGroup.Location = new System.Drawing.Point(553, 15);
             this.SetValueGroup.Name = "SetValueGroup";
-            this.SetValueGroup.Size = new System.Drawing.Size(232, 406);
+            this.SetValueGroup.Size = new System.Drawing.Size(232, 197);
             this.SetValueGroup.TabIndex = 8;
             this.SetValueGroup.TabStop = false;
-            this.SetValueGroup.Text = "預設參數";
+            this.SetValueGroup.Text = "參數設定";
+            // 
+            // SetValueBTN
+            // 
+            this.SetValueBTN.Location = new System.Drawing.Point(152, 90);
+            this.SetValueBTN.Name = "SetValueBTN";
+            this.SetValueBTN.Size = new System.Drawing.Size(70, 90);
+            this.SetValueBTN.TabIndex = 5;
+            this.SetValueBTN.Text = "設定";
+            this.SetValueBTN.UseVisualStyleBackColor = true;
+            this.SetValueBTN.Click += new System.EventHandler(this.SetValueBTN_Click);
             // 
             // Contrast_SetValue_lab
             // 
             this.Contrast_SetValue_lab.AutoSize = true;
             this.Contrast_SetValue_lab.Font = new System.Drawing.Font("Noto Serif JP Medium", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.Contrast_SetValue_lab.Location = new System.Drawing.Point(40, 144);
+            this.Contrast_SetValue_lab.Location = new System.Drawing.Point(6, 112);
             this.Contrast_SetValue_lab.Name = "Contrast_SetValue_lab";
-            this.Contrast_SetValue_lab.Size = new System.Drawing.Size(159, 21);
+            this.Contrast_SetValue_lab.Size = new System.Drawing.Size(94, 21);
             this.Contrast_SetValue_lab.TabIndex = 4;
-            this.Contrast_SetValue_lab.Text = "Contrast_SetValue";
+            this.Contrast_SetValue_lab.Text = "對比數值";
             // 
             // Brightness_SetValue_lab
             // 
             this.Brightness_SetValue_lab.AutoSize = true;
             this.Brightness_SetValue_lab.Font = new System.Drawing.Font("Noto Serif JP Medium", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.Brightness_SetValue_lab.Location = new System.Drawing.Point(40, 66);
+            this.Brightness_SetValue_lab.Location = new System.Drawing.Point(6, 35);
             this.Brightness_SetValue_lab.Name = "Brightness_SetValue_lab";
-            this.Brightness_SetValue_lab.Size = new System.Drawing.Size(177, 21);
+            this.Brightness_SetValue_lab.Size = new System.Drawing.Size(94, 21);
             this.Brightness_SetValue_lab.TabIndex = 3;
-            this.Brightness_SetValue_lab.Text = "Brightness_SetValue";
-            // 
-            // Contrast_SetValue_txtBox
-            // 
-            this.Contrast_SetValue_txtBox.Font = new System.Drawing.Font("Noto Serif JP Medium", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.Contrast_SetValue_txtBox.Location = new System.Drawing.Point(44, 168);
-            this.Contrast_SetValue_txtBox.Name = "Contrast_SetValue_txtBox";
-            this.Contrast_SetValue_txtBox.Size = new System.Drawing.Size(141, 38);
-            this.Contrast_SetValue_txtBox.TabIndex = 2;
+            this.Brightness_SetValue_lab.Text = "亮度數值";
             // 
             // Brightness_SetValue_txtBox
             // 
             this.Brightness_SetValue_txtBox.Font = new System.Drawing.Font("Noto Serif JP Medium", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.Brightness_SetValue_txtBox.Location = new System.Drawing.Point(41, 90);
+            this.Brightness_SetValue_txtBox.Location = new System.Drawing.Point(10, 60);
             this.Brightness_SetValue_txtBox.Name = "Brightness_SetValue_txtBox";
-            this.Brightness_SetValue_txtBox.Size = new System.Drawing.Size(141, 38);
+            this.Brightness_SetValue_txtBox.Size = new System.Drawing.Size(120, 38);
             this.Brightness_SetValue_txtBox.TabIndex = 1;
+            // 
+            // Contrast_SetValue_txtBox
+            // 
+            this.Contrast_SetValue_txtBox.Font = new System.Drawing.Font("Noto Serif JP Medium", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.Contrast_SetValue_txtBox.Location = new System.Drawing.Point(10, 140);
+            this.Contrast_SetValue_txtBox.Name = "Contrast_SetValue_txtBox";
+            this.Contrast_SetValue_txtBox.Size = new System.Drawing.Size(120, 38);
+            this.Contrast_SetValue_txtBox.TabIndex = 2;
             // 
             // NigthModeBTN
             // 
-            this.NigthModeBTN.Location = new System.Drawing.Point(44, 341);
+            this.NigthModeBTN.Location = new System.Drawing.Point(50, 80);
             this.NigthModeBTN.Name = "NigthModeBTN";
-            this.NigthModeBTN.Size = new System.Drawing.Size(142, 59);
+            this.NigthModeBTN.Size = new System.Drawing.Size(140, 60);
             this.NigthModeBTN.TabIndex = 0;
             this.NigthModeBTN.Text = "夜晚";
             this.NigthModeBTN.UseVisualStyleBackColor = true;
-            this.NigthModeBTN.Click += new System.EventHandler(this.button1_Click);
+            this.NigthModeBTN.Click += new System.EventHandler(this.NigthModeBTN_Click);
+            // 
+            // Modegroup
+            // 
+            this.Modegroup.Controls.Add(this.NigthModeBTN);
+            this.Modegroup.Font = new System.Drawing.Font("Noto Serif JP Medium", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.Modegroup.Location = new System.Drawing.Point(550, 245);
+            this.Modegroup.Name = "Modegroup";
+            this.Modegroup.Size = new System.Drawing.Size(225, 185);
+            this.Modegroup.TabIndex = 9;
+            this.Modegroup.TabStop = false;
+            this.Modegroup.Text = "預設模式";
             // 
             // HID_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 459);
+            this.Controls.Add(this.Modegroup);
             this.Controls.Add(this.SetValueGroup);
             this.Controls.Add(this.ContrastGroup);
             this.Controls.Add(this.BrightnessGroup);
@@ -250,6 +275,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackContrast)).EndInit();
             this.SetValueGroup.ResumeLayout(false);
             this.SetValueGroup.PerformLayout();
+            this.Modegroup.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -274,5 +300,7 @@
         private System.Windows.Forms.TextBox Brightness_SetValue_txtBox;
         private System.Windows.Forms.HScrollBar BrightnesshScrollBar;
         private System.Windows.Forms.HScrollBar ContrasthScrollBar;
+        private System.Windows.Forms.GroupBox Modegroup;
+        private System.Windows.Forms.Button SetValueBTN;
     }
 }
