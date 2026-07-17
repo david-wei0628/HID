@@ -267,6 +267,7 @@
             this.Text = "HID";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HID__Form_FormClosing);
             this.Load += new System.EventHandler(this.HID_Form_Load);
+            this.ResizeEnd += new System.EventHandler(this.HID_Form_ResizeEnd);
             this.BrightnessGroup.ResumeLayout(false);
             this.BrightnessGroup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBrightness)).EndInit();

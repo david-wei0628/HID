@@ -140,6 +140,7 @@ public class DdcCiMonitorController
                     {
                         // 2. 優先使用 WMI 抓到的實體型號，如果抓不到，才用原本系統的描述
                         string realName = phys.szPhysicalMonitorDescription;
+                        Console.WriteLine(realName);
                         if (index < hardwareNames.Count && !string.IsNullOrEmpty(hardwareNames[index]))
                         {
                             realName = hardwareNames[index];
@@ -168,7 +169,7 @@ public class DdcCiMonitorController
         {
             // 查詢 Windows 的 WmiMonitorID 類別
             using (var searcher = new ManagementObjectSearcher(@"Root\W_M_I", "SELECT * FROM WmiMonitorID"))
-            {                
+            {
                 foreach (ManagementObject mo in searcher.Get())
                 {
                     // UserFriendlyName 儲存的是 EDID 裡面的實體型號代碼（為不連續的通訊陣列）
@@ -182,7 +183,6 @@ public class DdcCiMonitorController
                             sb.Append((char)c);
                         }
                         string displayName = sb.ToString().Trim();
-
                         // 如果型號前面沒有品牌，補上 ASUS (非必要，看個人喜好)
                         if (!string.IsNullOrEmpty(displayName))
                         {

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing;
+using System.Linq;
 
 namespace HID
 {
@@ -12,6 +14,25 @@ namespace HID
         public HID_Form()
         {
             InitializeComponent();
+        }
+
+        private void HID_Form_ResizeEnd(object sender, EventArgs e)
+        {
+            var allowedSizes = new List<Size>
+            {
+                new Size(816, 498),
+                new Size(900,600)
+            };
+
+            Size currentSize = this.Size;
+
+            // 找出目前尺寸與哪一組預設尺寸最接近
+            Size bestFit = allowedSizes.OrderBy(s =>
+                Math.Abs(s.Width - currentSize.Width) + Math.Abs(s.Height - currentSize.Height)
+            ).First();
+
+            // 磁吸到該尺寸
+            this.Size = bestFit;
         }
 
         private async void HID_Form_Load(object sender, EventArgs e)
@@ -143,7 +164,6 @@ namespace HID
             if (cmbMonitors.SelectedItem is DdcCiMonitorController.MonitorInfo selectedMonitor)
             {
                 int targetBrightness = trackBrightness.Value;
-                lblStatus.Text = $"正在變更亮度至 {targetBrightness}%...";
 
                 OSDBrightnessValueRevise(targetBrightness);
             }
@@ -154,14 +174,10 @@ namespace HID
             if (cmbMonitors.SelectedItem is DdcCiMonitorController.MonitorInfo selectedMonitor)
             {
                 int targetContrast = trackContrast.Value;
-                lblStatus.Text = $"正在變更對比至 {targetContrast}%...";
 
                 OSDContrastValueRevise(targetContrast);
             }
         }
-        /*private void trackContrast_Scroll(object sender, EventArgs e)
-        {
-        }*/
 
         private void NigthModeBTN_Click(object sender, EventArgs e)
         {
@@ -242,7 +258,10 @@ namespace HID
             if (cmbMonitors.SelectedItem is DdcCiMonitorController.MonitorInfo selectedMonitor)
             {
                 if (await DdcCiMonitorController.SetBrightnessAsync(selectedMonitor.Handle, (uint)OSDNewValue))
+                {
                     labBrightnessValue.Text = $"{OSDNewValue}%";
+                    lblStatus.Text = $"變更對比至 {OSDNewValue}%...";
+                }
                 else
                     lblStatus.Text = "設定失敗 (螢幕可能正處於 HDR 模式或 OSD 鎖定狀態)";
 
@@ -255,7 +274,10 @@ namespace HID
             if (cmbMonitors.SelectedItem is DdcCiMonitorController.MonitorInfo selectedMonitor)
             {
                 if (await DdcCiMonitorController.SetContrastAsync(selectedMonitor.Handle, (uint)OSDNewValue))
+                {
                     labContrastValue.Text = $"{OSDNewValue}%";
+                    lblStatus.Text = $"變更亮度至 {OSDNewValue}%...";
+                }
                 else
                     lblStatus.Text = "設定失敗 (螢幕可能正處於 HDR 模式或 OSD 鎖定狀態)";
 
@@ -283,9 +305,10 @@ namespace HID
         {
             int BrightnessValue;
             int ContrastValue;
-            int.TryParse(Brightness_SetValue_txtBox.Text, out BrightnessValue);            
+            int.TryParse(Brightness_SetValue_txtBox.Text, out BrightnessValue);
             int.TryParse(Contrast_SetValue_txtBox.Text, out ContrastValue);
             BTNchange(BrightnessValue, ContrastValue);
+            lblStatus.Text = $"亮度/對比 調整為 {BrightnessValue}%/{ContrastValue}%";
             Brightness_SetValue_txtBox.Text = null;
             Contrast_SetValue_txtBox.Text = null;
         }
